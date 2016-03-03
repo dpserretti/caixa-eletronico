@@ -1,0 +1,25 @@
+<h1>Realizar depósito</h1>
+
+
+
+<form action="deposit/:id" method="post">
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <div class="field">
+    <label>Conta para depósito</label>
+    <p><%= collection_select(:account_id, 0, Account.where(:users_id => current_user.id), :id, :number, prompt: "Selecione a conta") %></p>
+  </div>
+  <div class="field">
+    <label>Valor</label>
+    <p><input type="text" name="deposit[value]" /></p>
+    <!-- pegar esse valor e acrescentar na conta com o numero passado -->
+  </div>
+  <button type="submit" value="Depositar">Depositar</button>
+</form>
+
+
+  <!-- <button type="submit">Efetuar</button> -->
+<!-- pegar o valor e o numero da conta para deposito neste formulario e mandar para o controller fazer a alteração
+verificar como rails faz isso
+passing parameters from view to controller rails -->
+
+<%= link_to '<button>Voltar</button>'.html_safe, accounts_path %>

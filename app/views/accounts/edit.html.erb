@@ -1,0 +1,35 @@
+<h1>Editar conta</h1>
+
+<%= form_for(@account) do |f| %>
+  <% if @account.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
+
+      <ul>
+      <% @account.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <input name="account[users_id]" id="account_users_id" type="hidden" value="<%= @account.users_id %>">
+  <div class="field">
+    <label>Número</label>
+    <p><%= f.text_field :number %></p>
+  </div>
+  <div class="field">
+    <label>Saldo</label>
+    <p><%= f.text_field :balance, readonly: true %></p>
+  </div>
+  <div class="field">
+    <label>Status</label>
+    <p><%= f.text_field :status, readonly: true %></p>
+  </div>
+  <div class="actions">
+    <%= f.submit "Editar" %>
+  </div>
+<% end %>
+
+<%= link_to '<button>Mostrar</button>'.html_safe, @account %> |
+<%= link_to '<button>Voltar</button>'.html_safe, accounts_path %>

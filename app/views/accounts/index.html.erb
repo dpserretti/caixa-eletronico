@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listando contas</h1>
+
+<style type="text/css">
+  tr > th, tr > td {
+    text-align: center;
+    width: 110px;
+    padding: 5px;
+  }
+
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <!-- <th>Usuário</th> -->
+      <th>Conta</th>
+      <th>Saldo</th>
+      <th>Status</th>
+      <th colspan="2"> Ações </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accounts.each do |account| %>
+      <tr>
+        <td><%= account.number %></td>
+        <td><%= account.balance %></td>
+        <td><%= account.status %></td>
+        <!-- <td><%= link_to 'Mostrar', account %></td> -->
+        <td><%= link_to '<button>Editar</button>'.html_safe, edit_account_path(account) %></td>
+        <td><%= link_to '<button>Encerrar</button>'.html_safe, account, method: :delete, data: { confirm: 'Tem certeza?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '<button>Criar conta</button>'.html_safe, new_account_path %>
+
+<%= link_to '<button>Depositar</button>'.html_safe, deposit_path %>
+
+<!-- <%= link_to '<button>Realizar transferência</button>'.html_safe, new_account_path %> -->
