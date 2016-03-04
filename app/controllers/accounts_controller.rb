@@ -13,10 +13,6 @@ class AccountsController < ApplicationController
   def show
   end
 
-  def deposit
-
-  end
-
   # GET /accounts/new
   def new
     @account = Account.new

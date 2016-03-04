@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
-  get 'deposit' => 'accounts#deposit'
-  post 'deposit/:id' => 'accounts#index'
+  get 'deposit' => 'tranfers#deposit'
+  post 'deposit' => 'tranfers#create'
 end
