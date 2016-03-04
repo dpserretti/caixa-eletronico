@@ -29,8 +29,10 @@
         <td><%= account.balance %></td>
         <td><%= account.status %></td>
         <!-- <td><%= link_to 'Mostrar', account %></td> -->
-        <td><%= link_to '<button>Editar</button>'.html_safe, edit_account_path(account) %></td>
-        <td><%= link_to '<button>Encerrar</button>'.html_safe, account, method: :delete, data: { confirm: 'Tem certeza?' } %></td>
+        <% if account.status == "Ativa" || account.status == "ativa" %>
+          <td><%= link_to '<button>Editar</button>'.html_safe, edit_account_path(account) %></td>
+          <td><%= link_to '<button>Encerrar</button>'.html_safe, account, method: :delete, data: { confirm: 'Tem certeza?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
