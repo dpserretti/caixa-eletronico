@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   resources :users
 
   get 'deposit' => 'tranfers#deposit'
-  post 'deposit' => 'tranfers#create'
+  post 'deposit' => 'tranfers#depositar'
+
+  get 'withdraw' => 'tranfers#withdraw'
+  post 'withdraw' => 'tranfers#sacar'
 end

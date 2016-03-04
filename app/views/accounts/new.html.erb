@@ -19,8 +19,8 @@
     <p><%= f.text_field :number %></p>
   </div>
   <div class="field">
-    <label>Saldo</label>
-    <p><%= f.text_field :balance %></p>
+    <label>Saldo Inicial</label>
+    <p><%= f.number_field :balance %></p>
   </div>
   <!-- isso vai ser feito na hora de salvar no controller -->
   <input name="account[status]" id="account_status" type="hidden" value="Ativa">
