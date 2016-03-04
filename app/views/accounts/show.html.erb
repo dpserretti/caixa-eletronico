@@ -7,17 +7,17 @@
 
 <p>
   <strong>Numero:</strong>
-
+  <%= @account.number %>
 </p>
 
 <p>
   <strong>Saldo:</strong>
-
+  <%= @account.balance %>
 </p>
 
 <p>
   <strong>Status:</strong>
-
+  <%= @account.status %>
 </p>
 
 <%= link_to '<button>Editar</button>'.html_safe, edit_account_path(@account) %> |

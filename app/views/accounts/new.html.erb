@@ -22,11 +22,8 @@
     <label>Saldo</label>
     <p><%= f.text_field :balance %></p>
   </div>
-  <div class="field">
   <!-- isso vai ser feito na hora de salvar no controller -->
-    <label>Status</label>
-    <p><%= f.text_field :status %></p>
-  </div>
+  <input name="account[status]" id="account_status" type="hidden" value="Ativa">
   <div class="actions">
     <%= f.submit "Criar" %>
   </div>

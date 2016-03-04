@@ -13,6 +13,10 @@ class AccountsController < ApplicationController
   def show
   end
 
+  def deposit
+
+  end
+
   # GET /accounts/new
   def new
     @account = Account.new
@@ -22,6 +26,9 @@ class AccountsController < ApplicationController
   def edit
     if current_user.id != @account.users_id
       redirect_to accounts_path
+    else
+      @account = Account.find(params[:id])
+    end
   end
 
   # POST /accounts
@@ -30,7 +37,7 @@ class AccountsController < ApplicationController
     @account = Account.new(account_params)
     respond_to do |format|
       if @account.save
-        format.html { redirect_to accounts_path, notice: 'Account was successfully created.' }
+        format.html { redirect_to @account, notice: 'Account was successfully created.' }
         format.json { render :show, status: :created, location: @account }
       else
         format.html { render :new }
@@ -44,19 +51,13 @@ class AccountsController < ApplicationController
   def update
     respond_to do |format|
       if @account.update(account_params)
-        format.html { redirect_to accounts_path, notice: 'Account was successfully updated.' }
+        format.html { redirect_to @account, notice: 'Account was successfully updated.' }
         format.json { render :show, status: :ok, location: @account }
       else
         format.html { render :edit }
         format.json { render json: @account.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def deposit
-    @account = Account.find(params[:id])
-    @valor = params[:deposit][:value]
-    puts @valor
   end
 
   # DELETE /accounts/1
@@ -79,5 +80,5 @@ class AccountsController < ApplicationController
     def account_params
       params.require(:account).permit(:users_id, :number, :balance, :status)
     end
-  end
+
 end
