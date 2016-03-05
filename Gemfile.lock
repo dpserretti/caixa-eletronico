@@ -112,6 +112,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    method_source (0.8.2)
     mime-types (2.99.1)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
@@ -120,6 +121,12 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
     pg (0.18.4)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
@@ -192,6 +199,7 @@ GEM
     simple_form (3.2.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
+    slop (3.6.0)
     spring (1.6.4)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -251,6 +259,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   pg
+  pry-rails
   quiet_assets
   rails (= 4.2.5.1)
   rails_12factor

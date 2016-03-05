@@ -11,12 +11,16 @@ class TransfersController < ApplicationController
   def transfer
   end
 
+  def extract
+  end
+
   def depositar
     @deposit = Transfer.new(deposit_params)
     valor = deposit_params[:value]
     @account = Account.find(deposit_params[:destiny_account])
     valor = valor.to_f
     @account.balance += valor
+    @deposit.action = "Depósito"
 
     if @account.save
       if @deposit.save
@@ -33,15 +37,16 @@ class TransfersController < ApplicationController
     valor = valor.to_f
     @account.balance -= valor
 
-    if @account.balance < 0
-      flash[:notice] = "Saldo insuficiente."
-      # redirect_to accounts_path
-    end
+    @withdraw.action = "Saque"
 
-    if @account.save
-      if @withdraw.save
-        flash[:notice] = "Saque realizado."
-        redirect_to accounts_path
+    if @account.balance < 0
+      redirect_to accounts_path, :flash => { :error => "Saldo insuficiente." }
+    else
+      if @account.save
+        if @withdraw.save
+          flash[:notice] = "Saque realizado."
+          redirect_to accounts_path
+        end
       end
     end
   end
@@ -54,21 +59,50 @@ class TransfersController < ApplicationController
     @destiny = Account.find(transfer_params[:destiny_account])
     @origin.balance -= valor
     @destiny.balance += valor
+    @transfer.action = "Transferência"
+    taxa = 0
 
-    if @origin.balance < 0
-      flash[:notice] = "Saldo insuficiente."
-      # redirect_to accounts_path
+
+    if valor > 1000
+      taxa += 10
+    else
+      taxa += 5
     end
 
-    if @transfer.save
-      if @origin.save
-        if @destiny.save
-          flash[:notice] = "Saque realizado."
-          redirect_to accounts_path
+    agora = Time.now # retorna horário atual
+    hoje = Date.today.wday # retorna inteiro da semana, 0 = Dom
+
+    if hoje == 0 || hoje == 6
+      taxa += 7
+    else
+      if agora.hour < 9 || agora.hour > 18
+        taxa += 5
+      else
+        taxa += 7
+      end
+    end
+
+    @origin.balance -= taxa
+
+    binding.pry
+
+    if @origin.balance < 0
+      redirect_to accounts_path, :flash => { :error => "Saldo insuficiente." }
+    else
+      if @transfer.save
+        if @origin.save
+          if @destiny.save
+            flash[:notice] = "Transferência realizada."
+            redirect_to accounts_path
+          end
         end
       end
     end
   end
+
+  # def extrato
+  #   @transfers = Transfer.find()
+  # end
 
   def deposit_params
     params.require(:transfer).permit(:user_id, :destiny_account, :value)

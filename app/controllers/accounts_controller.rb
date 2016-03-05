@@ -21,13 +21,11 @@ class AccountsController < ApplicationController
   # GET /accounts/1/edit
   def edit
     if current_user.id != @account.users_id
-      flash[:notice] = "Esta conta não pertence a você."
-      redirect_to accounts_path
+      redirect_to accounts_path, :flash => { :error => "Esta conta não pertence a você." }
     else
       @account = Account.find(params[:id])
       if @account.status == "Encerrada"
-        flash[:notice] = "Você não pode editar um conta encerrada."
-        redirect_to accounts_path
+        redirect_to accounts_path, :flash => { :error => "Você não pode editar um conta encerrada." }
       end
     end
   end
