@@ -1,0 +1,25 @@
+<h1>Realizar transferência</h1>
+
+<%= form_for Transfer.new, url: transfer_path, method: :post do |t| %>
+
+  <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
+  <div class="field">
+    <label>Conta origem</label>
+    <p><%= t.collection_select(:origin_account, Account.where(:users_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
+  </div>
+
+  <div class="field">
+    <label>Conta destino</label>
+    <p><%= t.collection_select(:destiny_account, Account.where(:users_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
+  </div>
+
+  <div class="field">
+    <label>Valor</label>
+    <p><%= t.number_field :value %></p>
+  </div>
+
+  <%= t.submit "Transferir" %>
+
+<% end %>
+
+<%= link_to '<button>Voltar</button>'.html_safe, accounts_path %>
