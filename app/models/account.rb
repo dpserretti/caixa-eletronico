@@ -3,4 +3,5 @@ class Account < ActiveRecord::Base
   validates :users_id, presence: true
   validates :number, presence: true
   validates :balance, presence: true
+  validates :status, presence: true
 end

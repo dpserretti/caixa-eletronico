@@ -12,4 +12,7 @@ Rails.application.routes.draw do
 
   get 'transfer' => 'transfers#transfer'
   post 'transfer' => 'transfers#transferir'
+
+  get 'extract' => 'transfers#extract'
+  post 'extract' => 'transfers#extrato'
 end

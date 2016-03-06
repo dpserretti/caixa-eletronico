@@ -5,15 +5,6 @@ class TransfersController < ApplicationController
   def deposit
   end
 
-  def withdraw
-  end
-
-  def transfer
-  end
-
-  def extract
-  end
-
   def depositar
     @deposit = Transfer.new(deposit_params)
     valor = deposit_params[:value]
@@ -30,6 +21,9 @@ class TransfersController < ApplicationController
     end
   end
 
+  def withdraw
+  end
+
   def sacar
     @withdraw = Transfer.new(withdraw_params)
     valor = deposit_params[:value]
@@ -39,16 +33,25 @@ class TransfersController < ApplicationController
 
     @withdraw.action = "Saque"
 
-    if @account.balance < 0
-      redirect_to accounts_path, :flash => { :error => "Saldo insuficiente." }
-    else
-      if @account.save
-        if @withdraw.save
-          flash[:notice] = "Saque realizado."
-          redirect_to accounts_path
+    @user = User.find_by_email(current_user.email)
+
+    if @user.valid_password?(params[:password])
+      if @account.balance < 0
+        redirect_to accounts_path, :flash => { :error => "Saldo insuficiente." }
+      else
+        if @account.save
+          if @withdraw.save
+            flash[:notice] = "Saque realizado."
+            redirect_to accounts_path
+          end
         end
       end
+    else
+      redirect_to accounts_path, :flash => { :error => "Saque não realizado. Senha incorreta." }
     end
+  end
+
+  def transfer
   end
 
   def transferir
@@ -62,7 +65,7 @@ class TransfersController < ApplicationController
     @transfer.action = "Transferência"
     taxa = 0
 
-
+    # verificar fluxo da taxa
     if valor > 1000
       taxa += 10
     else
@@ -84,25 +87,39 @@ class TransfersController < ApplicationController
 
     @origin.balance -= taxa
 
-    binding.pry
+    @user = User.find_by_email(current_user.email)
 
-    if @origin.balance < 0
-      redirect_to accounts_path, :flash => { :error => "Saldo insuficiente." }
-    else
-      if @transfer.save
-        if @origin.save
-          if @destiny.save
-            flash[:notice] = "Transferência realizada."
-            redirect_to accounts_path
+    if @user.valid_password?(params[:password])
+      if @origin.balance < 0
+        redirect_to accounts_path, :flash => { :error => "Saldo insuficiente." }
+      else
+        if @transfer.save
+          if @origin.save
+            if @destiny.save
+              flash[:notice] = "Transferência realizada."
+              redirect_to accounts_path
+            end
           end
         end
       end
+    else
+      redirect_to accounts_path, :flash => { :error => "Transferência não realizada. Senha incorreta." }
     end
   end
 
-  # def extrato
-  #   @transfers = Transfer.find()
-  # end
+  def extract
+  end
+
+  def extrato
+    data_ini = DateTime.parse(params[:data_ini])
+    data_fin = DateTime.parse(params[:data_fin])
+    data_ini = data_ini.strftime('%a %b %d')
+    data_fin = data_fin.strftime('%a %b %d')
+    @transfers = Transfer.where(:created_at => @data_ini..@data_fin)
+    @user = User.find_by_email(current_user.email)
+    binding.pry
+    redirect_to accounts_path
+  end
 
   def deposit_params
     params.require(:transfer).permit(:user_id, :destiny_account, :value)

@@ -3,6 +3,7 @@
 <%= form_for Transfer.new, url: withdraw_path, method: :post do |t| %>
 
   <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
+
   <div class="field">
     <label>Conta</label>
     <p><%= t.collection_select(:origin_account, Account.where(:users_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
@@ -13,7 +14,14 @@
     <p><%= t.number_field :value %></p>
   </div>
 
-  <%= t.submit "Sacar" %>
+  <div class="field">
+    <label>Digite sua senha:</label>
+    <p><%= password_field_tag :password %></p>
+  </div>
+
+  <div class="field">
+    <%= t.submit "Sacar" %>
+  </div>
 
 <% end %>
 

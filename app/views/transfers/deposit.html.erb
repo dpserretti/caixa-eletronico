@@ -3,6 +3,7 @@
 <%= form_for Transfer.new, url: deposit_path, method: :post do |t| %>
 
   <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
+
   <div class="field">
     <label>Conta</label>
     <p><%= t.collection_select(:destiny_account, Account.where(:users_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
@@ -13,7 +14,9 @@
     <p><%= t.number_field :value %></p>
   </div>
 
-  <%= t.submit "Depositar" %>
+  <div class="field">
+    <%= t.submit "Depositar" %>
+  </div>
 
 <% end %>
 
