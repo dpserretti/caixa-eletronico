@@ -1,6 +1,6 @@
 <h1>Editar conta</h1>
 
-<%= form_for(@account), html: {autocomplete: "off"} do |f| %>
+<%= form_for(@account) do |f| %>
   <% if @account.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
@@ -16,7 +16,7 @@
   <input name="account[users_id]" id="account_users_id" type="hidden" value="<%= @account.users_id %>">
   <div class="field">
     <label>Número</label>
-    <p><%= f.text_field :number %></p>
+    <p><%= f.text_field :number, autocomplete: "off"%></p>
   </div>
   <div class="field">
     <label>Saldo</label>

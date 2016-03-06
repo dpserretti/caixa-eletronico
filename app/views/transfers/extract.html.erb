@@ -1,15 +1,57 @@
 <h1>Solicitar extrato</h1>
 
-<%= form_tag extract_path, method: :post do %>
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $('.date').mask('99/99/9999');
+
+    jQuery.extend(jQuery.validator.messages, {
+      date: "Entre com uma data válida"
+    });
+
+    $("#form_extract").validate({
+      rules: {
+        data_ini: {
+          required: true
+        },
+        data_fin: {
+          required: true
+        },
+        "account_id[0]": {
+          required: true
+        }
+      },
+      messages: {
+        data_ini: {
+          required: "Campo obrigatório",
+          valid: "asd"
+        },
+        data_fin: {
+          required: "Campo obrigatório"
+        },
+        "account_id[0]": {
+          required: "Campo obrigatório"
+        }
+      },
+      errorPlacement: function(error, element) {
+        offset = element.offset();
+        error.insertAfter(element);
+        error.addClass("validationError");
+      }
+    });
+  });
+</script>
+
+<%= form_tag extract_path, :id => 'form_extract', method: :post do %>
 
   <div class="field">
     <label>Data inicial</label>
-    <p><input type="text" name="data_ini" autocomplete="off"></p>
+    <p><input type="text" class="date" name="data_ini" autocomplete="off"></p>
   </div>
 
   <div class="field">
     <label>Data final</label>
-    <p><input type="text" name="data_fin" autocomplete="off"></p>
+    <p><input type="text" class="date" name="data_fin" autocomplete="off"></p>
   </div>
 
   <div class="field">

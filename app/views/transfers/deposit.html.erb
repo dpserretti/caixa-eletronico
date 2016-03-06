@@ -1,5 +1,36 @@
 <h1>Realizar depósito</h1>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#new_transfer").validate({
+      rules: {
+        "transfer[destiny_account]": {
+          required: true
+        },
+        "transfer[value]": {
+          required: true,
+          digits: true
+        }
+      },
+      messages: {
+        "transfer[destiny_account]": {
+          required: "Campo obrigatório"
+        },
+        "transfer[value]": {
+          required: "Campo obrigatório",
+          digits: "Apenas números inteiros"
+        }
+      },
+      errorPlacement: function(error, element) {
+        offset = element.offset();
+        error.insertAfter(element);
+        error.addClass("validationError");
+      }
+    });
+  });
+</script>
+
+
 <%= form_for Transfer.new, html: {autocomplete: "off"}, url: deposit_path, method: :post do |t| %>
 
   <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
@@ -11,7 +42,7 @@
 
   <div class="field">
     <label>Valor</label>
-    <p><%= t.number_field :value %></p>
+    <p><%= t.text_field :value %></p>
   </div>
 
   <div class="field">

@@ -1,6 +1,41 @@
 <h1>Criar conta</h1>
 
-<%= form_for(@account), html: {autocomplete: "off"} do |f| %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#new_account").validate({
+      rules: {
+        "account[number]": {
+          required: true,
+          digits: true,
+          minlength: 4
+        },
+        "account[balance]": {
+          required: true,
+          digits: true
+        }
+      },
+      messages: {
+        "account[number]": {
+          required: "Campo obrigatório",
+          digits: "Apenas números inteiros",
+          minlength: "Mínimo 4 números"
+        },
+        "account[balance]": {
+          required: "Campo obrigatório",
+          digits: "Apenas números inteiros"
+        }
+      },
+      errorPlacement: function(error, element) {
+        offset = element.offset();
+        error.insertAfter(element);
+        error.addClass("validationError");
+      }
+    });
+  });
+
+</script>
+
+<%= form_for(@account) do |f| %>
   <% if @account.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
@@ -16,11 +51,11 @@
   <input name="account[users_id]" id="account_users_id" type="hidden" value="<%= current_user.id %>">
   <div class="field">
     <label>Número</label>
-    <p><%= f.text_field :number %></p>
+    <p><%= f.text_field :number, autocomplete: "off" %></p>
   </div>
   <div class="field">
-    <label>Saldo Inicial</label>
-    <p><%= f.number_field :balance %></p>
+    <label>Saldo inicial</label>
+    <p><%= f.text_field :balance, autocomplete: "off" %></p>
   </div>
   <!-- isso vai ser feito na hora de salvar no controller -->
   <input name="account[status]" id="account_status" type="hidden" value="Ativa">

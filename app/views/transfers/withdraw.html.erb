@@ -1,5 +1,41 @@
 <h1>Realizar saque</h1>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#new_transfer").validate({
+      rules: {
+        "transfer[origin_account]": {
+          required: true
+        },
+        "transfer[value]": {
+          required: true,
+          digits: true
+        },
+        password: {
+          required: true
+        }
+      },
+      messages: {
+        "transfer[origin_account]": {
+          required: "Campo obrigatório"
+        },
+        "transfer[value]": {
+          required: "Campo obrigatório",
+          digits: "Apenas números inteiros"
+        },
+        password: {
+          required: "Campo obrigatório"
+        }
+      },
+      errorPlacement: function(error, element) {
+        offset = element.offset();
+        error.insertAfter(element);
+        error.addClass("validationError");
+      }
+    });
+  });
+</script>
+
 <%= form_for Transfer.new, html: {autocomplete: "off"}, url: withdraw_path, method: :post do |t| %>
 
   <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">

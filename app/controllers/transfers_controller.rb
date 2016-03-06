@@ -63,28 +63,26 @@ class TransfersController < ApplicationController
     @origin.balance -= valor
     @destiny.balance += valor
     @transfer.action = "Transferência"
-    taxa = 0
-
-    # verificar fluxo da taxa
-    if valor > 1000
-      taxa += 10
-    else
-      taxa += 5
-    end
+    taxa = 5
 
     agora = Time.now # retorna horário atual
+    # agora = DateTime.now.next_week.next_day(2)
     hoje = Date.today.wday # retorna inteiro da semana, 0 = Dom
 
     if hoje == 0 || hoje == 6
-      taxa += 7
+      taxa += 2
     else
       if agora.hour < 9 || agora.hour > 18
-        taxa += 5
+        taxa = 5
       else
-        taxa += 7
+        taxa += 2
       end
     end
 
+    if valor > 1000
+      taxa += 10
+    end
+    # binding.pry
     @origin.balance -= taxa
 
     @user = User.find_by_email(current_user.email)
@@ -115,8 +113,10 @@ class TransfersController < ApplicationController
     data_fin = DateTime.parse(params[:data_fin])
     data_ini = data_ini.beginning_of_day
     data_fin = data_fin.end_of_day
-    @transfers = Transfer.where(:created_at => data_ini..data_fin, :user_id => current_user.id)
-    # binding.pry
+    conta = params[:account_id]
+    @transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"], :user_id => current_user.id)
+    @transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"], :user_id => current_user.id)
+    # binding.pryexi
   end
 
   def deposit_params

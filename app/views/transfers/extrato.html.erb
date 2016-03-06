@@ -14,18 +14,30 @@
     <tr>
       <th>Data</th>
       <th>Ação</th>
+      <th>Valor</th>
       <th>Conta origem</th>
       <th>Conta destino</th>
+
     </tr>
   </thead>
 
   <tbody>
-    <% @transfers.each do |t| %>
+    <% @transfers1.each do |t1| %>
       <tr>
-        <td><%= t.created_at.to_datetime %></td>
-        <td><%= t.action %></td>
-        <td><%= t.origin_account %></td>
-        <td><%= t.destiny_account %></td>
+        <td><%= t1.created_at.to_date %></td>
+        <td><%= t1.action %></td>
+        <td><%= t1.value %></td>
+        <td><%= t1.origin_account %></td>
+        <td><%= t1.destiny_account %></td>
+      </tr>
+    <% end %>
+    <% @transfers2.each do |t2| %>
+      <tr>
+        <td><%= t2.created_at.to_date %></td>
+        <td><%= t2.action %></td>
+        <td><%= t2.value %></td>
+        <td><%= t2.origin_account %></td>
+        <td><%= t2.destiny_account %></td>
       </tr>
     <% end %>
   </tbody>
