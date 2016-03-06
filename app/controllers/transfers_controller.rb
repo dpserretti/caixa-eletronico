@@ -37,7 +37,7 @@ class TransfersController < ApplicationController
 
     if @user.valid_password?(params[:password])
       if @account.balance < 0
-        redirect_to accounts_path, :flash => { :error => "Saldo insuficiente." }
+        redirect_to withdraw_path, :flash => { :error => "Saldo insuficiente." }
       else
         if @account.save
           if @withdraw.save
@@ -47,7 +47,7 @@ class TransfersController < ApplicationController
         end
       end
     else
-      redirect_to accounts_path, :flash => { :error => "Saque não realizado. Senha incorreta." }
+      redirect_to withdraw_path, :flash => { :error => "Saque não realizado. Senha incorreta." }
     end
   end
 
@@ -91,7 +91,7 @@ class TransfersController < ApplicationController
 
     if @user.valid_password?(params[:password])
       if @origin.balance < 0
-        redirect_to accounts_path, :flash => { :error => "Saldo insuficiente." }
+        redirect_to transfer_path , :flash => { :error => "Saldo insuficiente." }
       else
         if @transfer.save
           if @origin.save
@@ -103,7 +103,7 @@ class TransfersController < ApplicationController
         end
       end
     else
-      redirect_to accounts_path, :flash => { :error => "Transferência não realizada. Senha incorreta." }
+      redirect_to transfer_path , :flash => { :error => "Transferência não realizada. Senha incorreta." }
     end
   end
 
@@ -113,12 +113,10 @@ class TransfersController < ApplicationController
   def extrato
     data_ini = DateTime.parse(params[:data_ini])
     data_fin = DateTime.parse(params[:data_fin])
-    data_ini = data_ini.strftime('%a %b %d')
-    data_fin = data_fin.strftime('%a %b %d')
-    @transfers = Transfer.where(:created_at => @data_ini..@data_fin)
-    @user = User.find_by_email(current_user.email)
-    binding.pry
-    redirect_to accounts_path
+    data_ini = data_ini.beginning_of_day
+    data_fin = data_fin.end_of_day
+    @transfers = Transfer.where(:created_at => data_ini..data_fin, :user_id => current_user.id)
+    # binding.pry
   end
 
   def deposit_params

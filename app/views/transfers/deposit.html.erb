@@ -1,6 +1,6 @@
 <h1>Realizar depósito</h1>
 
-<%= form_for Transfer.new, url: deposit_path, method: :post do |t| %>
+<%= form_for Transfer.new, html: {autocomplete: "off"}, url: deposit_path, method: :post do |t| %>
 
   <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
 

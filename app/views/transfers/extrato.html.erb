@@ -1,0 +1,36 @@
+<h1>Extrato</h1>
+
+<style type="text/css">
+  tr > th, tr > td {
+    text-align: center;
+    width: 110px;
+    padding: 5px;
+  }
+
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Ação</th>
+      <th>Conta origem</th>
+      <th>Conta destino</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @transfers.each do |t| %>
+      <tr>
+        <td><%= t.created_at.to_datetime %></td>
+        <td><%= t.action %></td>
+        <td><%= t.origin_account %></td>
+        <td><%= t.destiny_account %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '<button>Voltar</button>'.html_safe, accounts_path %>

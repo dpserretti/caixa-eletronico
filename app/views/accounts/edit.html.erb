@@ -1,6 +1,6 @@
 <h1>Editar conta</h1>
 
-<%= form_for(@account) do |f| %>
+<%= form_for(@account), html: {autocomplete: "off"} do |f| %>
   <% if @account.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
