@@ -63,28 +63,26 @@ class TransfersController < ApplicationController
     @origin.balance -= valor
     @destiny.balance += valor
     @transfer.action = "Transferência"
-    taxa = 5
 
     agora = Time.now # retorna horário atual
-    # agora = DateTime.now.next_week.next_day(2)
     hoje = Date.today.wday # retorna inteiro da semana, 0 = Dom
+    taxa = 0
 
-    if hoje == 0 || hoje == 6
-      taxa += 2
-    else
-      if agora.hour < 9 || agora.hour > 18
-        taxa = 5
+    if agora.hour >= 9 && agora.hour <= 18
+      if hoje == 0 || hoje == 6
+        taxa = 7
       else
-        taxa += 2
+        taxa = 5
       end
+    else
+      taxa = 7
     end
 
     if valor > 1000
       taxa += 10
     end
-    # binding.pry
-    @origin.balance -= taxa
 
+    @origin.balance -= taxa
     @user = User.find_by_email(current_user.email)
 
     if @user.valid_password?(params[:password])
