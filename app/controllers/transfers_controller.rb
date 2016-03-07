@@ -116,7 +116,7 @@ class TransfersController < ApplicationController
     conta = params[:account_id]
     @transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"], :user_id => current_user.id)
     @transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"], :user_id => current_user.id)
-    # binding.pryexi
+    # binding.pry
   end
 
   def deposit_params
