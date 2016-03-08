@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html class="fullpage">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="public/favicon.ico">
     <title><%= content_for?(:title) ? yield(:title) : "Caixa Eletronico" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Caixa Eletronico" %>">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
-    <header>
-      <%= render 'layouts/navigation' %>
-    </header>
-    <main role="main">
+  <body class="fullpage">
+    <%= render 'layouts/navigation' %>
+    <main role="main" class="main">
        <%= render 'layouts/messages' %>
        <%= yield %>
     </main>

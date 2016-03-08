@@ -1,15 +1,9 @@
 <h1>Extrato</h1>
 
-<style type="text/css">
-  tr > th, tr > td {
-    text-align: center;
-    width: 110px;
-    padding: 5px;
-  }
-
-</style>
-
-<table>
+<p>Conta:
+  <strong><%= @conta.number %></strong>
+</p>
+<table style="margin-left: 120px;">
   <thead>
     <tr>
       <th>Data</th>
@@ -17,29 +11,32 @@
       <th>Valor</th>
       <th>Conta origem</th>
       <th>Conta destino</th>
-
+      <th>Saldo</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @transfers1.each do |t1| %>
+    <% @tudo.each do |t1| %>
       <tr>
-        <td><%= t1.created_at.to_date %></td>
+        <td><%= t1.created_at.to_datetime %></td>
         <td><%= t1.action %></td>
-        <td><%= t1.value %></td>
-        <td><%= t1.origin_account %></td>
-        <td><%= t1.destiny_account %></td>
+        <% if t1.action == "Depósito" %>
+          <td class="deposito">+<%= t1.value %></td>
+        <% else %>
+          <% if t1.action == "Saque" %>
+            <td class="saque">-<%= t1.value %></td>
+          <% else %>
+          <!-- se é transf, ele ve se new_account ou new_account_destiny esta vazio -->
+            <td class="saque"><%= t1.value %></td>
+          <% end %>
+        <% end %>
+
+        <td><%= t1.origin_acc_number %></td>
+        <td><%= t1.destiny_acc_number %></td>
+        <td><%= t1.new_balance %></td>
       </tr>
     <% end %>
-    <% @transfers2.each do |t2| %>
-      <tr>
-        <td><%= t2.created_at.to_date %></td>
-        <td><%= t2.action %></td>
-        <td><%= t2.value %></td>
-        <td><%= t2.origin_account %></td>
-        <td><%= t2.destiny_account %></td>
-      </tr>
-    <% end %>
+
   </tbody>
 </table>
 

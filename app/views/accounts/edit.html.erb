@@ -1,5 +1,32 @@
 <h1>Editar conta</h1>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".edit_account").validate({
+      rules: {
+        "account[number]": {
+          required: true,
+          digits: true,
+          minlength: 4
+        }
+      },
+      messages: {
+        "account[number]": {
+          required: "Campo obrigatório",
+          digits: "Apenas números",
+          minlength: "Mínimo 4 números"
+        }
+      },
+      errorPlacement: function(error, element) {
+        offset = element.offset();
+        error.insertAfter(element);
+        error.addClass("validationError");
+      }
+    });
+  });
+
+</script>
+
 <%= form_for(@account) do |f| %>
   <% if @account.errors.any? %>
     <div id="error_explanation">
@@ -27,9 +54,8 @@
     <p><%= f.text_field :status, readonly: true %></p>
   </div>
   <div class="actions">
-    <%= f.submit "Editar" %>
+    <%= f.submit "Confirmar", :class => "acao" %>
   </div>
 <% end %>
 
-<%= link_to '<button>Mostrar</button>'.html_safe, @account %> |
 <%= link_to '<button>Voltar</button>'.html_safe, accounts_path %>

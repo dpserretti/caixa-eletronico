@@ -15,4 +15,7 @@ Rails.application.routes.draw do
 
   get 'extract' => 'transfers#extract'
   post 'extract' => 'transfers#extrato'
+
+  get 'balance' => 'transfers#balance'
+  post 'balance' => 'transfers#saldo'
 end

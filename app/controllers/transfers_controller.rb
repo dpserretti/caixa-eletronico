@@ -11,6 +11,8 @@ class TransfersController < ApplicationController
     @account = Account.find(deposit_params[:destiny_account])
     valor = valor.to_f
     @account.balance += valor
+    @deposit.new_balance = @account.balance
+    @deposit.destiny_acc_number = @account.number
     @deposit.action = "Depósito"
 
     if @account.save
@@ -30,7 +32,8 @@ class TransfersController < ApplicationController
     @account = Account.find(withdraw_params[:origin_account])
     valor = valor.to_f
     @account.balance -= valor
-
+    @withdraw.new_balance = @account.balance
+    @withdraw.origin_acc_number = @account.number
     @withdraw.action = "Saque"
 
     @user = User.find_by_email(current_user.email)
@@ -62,7 +65,6 @@ class TransfersController < ApplicationController
     @destiny = Account.find(transfer_params[:destiny_account])
     @origin.balance -= valor
     @destiny.balance += valor
-    @transfer.action = "Transferência"
 
     agora = Time.now # retorna horário atual
     hoje = Date.today.wday # retorna inteiro da semana, 0 = Dom
@@ -83,6 +85,11 @@ class TransfersController < ApplicationController
     end
 
     @origin.balance -= taxa
+    @transfer.new_balance = @origin.balance
+    # @transfer.new_balance_destiny = @destiny.balance
+    @transfer.origin_acc_number = @origin.number
+    @transfer.destiny_acc_number = @destiny.number
+    @transfer.action = "Transferência"
     @user = User.find_by_email(current_user.email)
 
     if @user.valid_password?(params[:password])
@@ -112,9 +119,25 @@ class TransfersController < ApplicationController
     data_ini = data_ini.beginning_of_day
     data_fin = data_fin.end_of_day
     conta = params[:account_id]
-    @transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"], :user_id => current_user.id)
-    @transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"], :user_id => current_user.id)
+    @conta = Account.find(conta["0"])
+    @saldo_ini = Account.where(:id => conta["0"], :updated_at => data_ini)
+    @saldo_fin = Account.where(:id => conta["0"], :updated_at => data_fin)
+    # pegar obj conta para mostrar saldo inicial e final do periodo
+    transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"], :user_id => current_user.id)
+    transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"], :user_id => current_user.id)
+    transfs = transfers1 + transfers2
+    @tudo = transfs.sort_by(&:created_at)
+    # adicionar campo taxa e colocar campo de deposito livre e conta destino
+    # na transferência também
     # binding.pry
+  end
+
+  def balance
+  end
+
+  def saldo
+    conta = params[:account_id]
+    @conta = Account.find(conta["0"])
   end
 
   def deposit_params

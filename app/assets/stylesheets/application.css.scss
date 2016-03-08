@@ -13,3 +13,108 @@
  *= require_tree .
  *= require_self
  */
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding-top: 55px;
+  width: 116px;
+  background: #333333;
+  height: 120%;
+}
+
+.topbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  background: #333333;
+  padding: 15px 0px 0px 116px;
+}
+
+.topbar-visitor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  background: #333333;
+  padding: 15px 0px 0px 15px;
+}
+
+.fullpage {
+  height: 100% !important;
+}
+
+tr > th, tr > td {
+  text-align: center;
+  width: 110px;
+  padding: 5px;
+}
+
+span {
+  color: #FFF;
+  padding: 0px 10px;
+}
+
+span > a {
+  color: #FFF !important;
+  text-decoration: none;
+}
+
+span > a:hover, span > a:focus {
+  color: #FFF !important;
+  background: #000;
+  text-decoration: none;
+}
+
+li > a {
+  color: #FFF !important;
+}
+
+li > a:hover, li > a:focus {
+  background: #333333 !important;
+  color: #000 !important;
+}
+
+form {
+  background-color: #F5F5F5;
+  border: 1px solid #E3E3E3;
+  border-radius: 5px;
+  width: 50%;
+  margin: auto;
+  padding-top: 15px;
+}
+
+.acao {
+  padding: 5px;
+  color: #FFF;
+  background: #333333;
+  border-radius: 6px;
+  border-style: none;
+  margin-top: 8px;
+}
+
+button {
+  padding: 5px;
+  color: #FFF;
+  background: #333333;
+  border-radius: 6px;
+  border-style: none;
+  margin-top: 12px;
+}
+
+.validationError {
+  color: red;
+}
+
+.deposito {
+  color: green;
+}
+
+.saque {
+  color: red;
+}

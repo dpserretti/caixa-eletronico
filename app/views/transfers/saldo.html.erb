@@ -1,17 +1,19 @@
+<h1>Saldo</h1>
+
 <p>
   <strong>Numero:</strong>
-  <%= @account.number %>
+  <%= @conta.number %>
 </p>
 
 <p>
   <strong>Saldo:</strong>
-  <%= @account.balance %>
+  <%= @conta.balance %>
 </p>
 
 <p>
   <strong>Status:</strong>
-  <%= @account.status %>
+  <%= @conta.status %>
 </p>
 
-<%= link_to '<button>Editar</button>'.html_safe, edit_account_path(@account) %> <br>
+<%= link_to '<button>Editar</button>'.html_safe, edit_account_path(@conta) %> <br>
 <%= link_to '<button>Voltar</button>'.html_safe, accounts_path %>

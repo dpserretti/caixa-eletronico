@@ -36,7 +36,7 @@
   });
 </script>
 
-<%= form_for Transfer.new, html: {autocomplete: "off"}, url: withdraw_path, method: :post do |t| %>
+<%= form_for Transfer.new, html: {autocomplete: "off", :role => 'form'}, url: withdraw_path, method: :post do |t| %>
 
   <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
 
@@ -47,7 +47,7 @@
 
   <div class="field">
     <label>Valor</label>
-    <p><%= t.number_field :value %></p>
+    <p><%= t.text_field :value %></p>
   </div>
 
   <div class="field">
@@ -56,7 +56,7 @@
   </div>
 
   <div class="field">
-    <%= t.submit "Sacar" %>
+    <%= t.submit "Sacar", :class => "acao" %>
   </div>
 
 <% end %>

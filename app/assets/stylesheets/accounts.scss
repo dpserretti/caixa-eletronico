@@ -3,15 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 button {
-  color: #fff;
-  background-color: #3872DD;
-  border: none;
+  color: #FFF;
+  background-color: #333333;
+  border: medium none;
+  padding: 7px;
+  border-radius: 7px;
 }
 
 button:hover {
-  color: #000;
-}
-
-.validationError {
-  color: red;
+  color: #EEE;
 }

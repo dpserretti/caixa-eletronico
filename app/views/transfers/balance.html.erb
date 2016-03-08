@@ -1,4 +1,4 @@
-<h1>Solicitar extrato</h1>
+<h1>Solicitar saldo</h1>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -42,17 +42,7 @@
   });
 </script>
 
-<%= form_tag extract_path, :id => 'form_extract', method: :post do %>
-
-  <div class="field">
-    <label>Data inicial</label>
-    <p><input type="text" class="date" name="data_ini" autocomplete="off"></p>
-  </div>
-
-  <div class="field">
-    <label>Data final</label>
-    <p><input type="text" class="date" name="data_fin" autocomplete="off"></p>
-  </div>
+<%= form_tag balance_path , :id => 'form_balance', method: :post do %>
 
   <div class="field">
     <label>Conta</label>

@@ -1,4 +1,4 @@
-<h1>Criar conta</h1>
+<h1>Nova conta</h1>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -60,7 +60,7 @@
   <!-- isso vai ser feito na hora de salvar no controller -->
   <input name="account[status]" id="account_status" type="hidden" value="Ativa">
   <div class="actions">
-    <%= f.submit "Criar" %>
+    <%= f.submit "Criar", :class => "acao" %>
   </div>
 <% end %>
 

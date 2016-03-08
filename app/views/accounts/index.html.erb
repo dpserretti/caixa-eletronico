@@ -1,6 +1,6 @@
 <!-- <p id="notice"><%= notice %></p> -->
 
-<h1>Listando contas</h1>
+<h1>Minhas contas</h1>
 
 <style type="text/css">
   tr > th, tr > td {
@@ -11,7 +11,7 @@
 
 </style>
 
-<table>
+<table style="margin: auto;">
   <thead>
     <tr>
       <!-- <th>Usuário</th> -->
@@ -38,16 +38,4 @@
   </tbody>
 </table>
 
-<br>
-
-<%= link_to '<button>Criar conta</button>'.html_safe, new_account_path %>
-
-<%= link_to '<button>Depositar</button>'.html_safe, deposit_path %>
-
-<%= link_to '<button>Sacar</button>'.html_safe, withdraw_path %>
-
-<%= link_to '<button>Transferir</button>'.html_safe, transfer_path %>
-
-<%= link_to '<button>Extrato</button>'.html_safe, extract_path %>
-
-<!-- <%= link_to '<button>Realizar transferência</button>'.html_safe, new_account_path %> -->
+<%= link_to '<button class="acao">Nova conta</button>'.html_safe, new_account_path %>
