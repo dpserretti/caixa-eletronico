@@ -69,7 +69,7 @@ tr > th, tr > td {
 
 .div-ix {
   margin: auto;
-  width: 300px;
+  width: 300px !important;
 }
 
 .menu {
@@ -92,6 +92,17 @@ tr > th, tr > td {
   color: #000 !important;
   background: #333333 !important;
   text-decoration: none;
+}
+
+.pg-inicial {
+  float: left;
+  margin-left: 10px;
+  color: #FFF !important;
+}
+
+.pg-inicial:hover {
+  color: #000 !important;
+  background: #333333 !important;
 }
 
 span {
