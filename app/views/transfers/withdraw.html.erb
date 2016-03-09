@@ -12,7 +12,8 @@
           digits: true
         },
         password: {
-          required: true
+          required: true,
+          minlength: 8
         }
       },
       messages: {
@@ -24,12 +25,13 @@
           digits: "Apenas números"
         },
         password: {
-          required: "Campo obrigatório"
+          required: "Campo obrigatório",
+          minlength: "Mínimo 8 caracteres"
         }
       },
       errorPlacement: function(error, element) {
         offset = element.offset();
-        error.insertAfter(element);
+        error.insertAfter(element.parent());
         error.addClass("validationError");
       }
     });

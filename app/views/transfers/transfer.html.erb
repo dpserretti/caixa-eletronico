@@ -1,5 +1,55 @@
 <h1>Realizar transferência</h1>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#new_transfer").validate({
+      rules: {
+        "transfer[origin_account]": {
+          required: true
+        },
+        "transfer[destiny_account]": {
+          required: true,
+          digits: true,
+          minlength: 4,
+          maxlength: 6
+        },
+        "transfer[value]": {
+          required: true,
+          digits: true
+        },
+        password: {
+          required: true,
+          minlength: 8
+        }
+      },
+      messages: {
+        "transfer[origin_account]": {
+          required: "Campo obrigatório"
+        },
+        "transfer[destiny_account]": {
+          required: "Campo obrigatório",
+          digits: "Apenas números",
+          minlength: "Mínimo 4 números",
+          maxlength: "Máximo 6 números"
+        },
+        "transfer[value]": {
+          required: "Campo obrigatório",
+          digits: "Apenas números"
+        },
+        password: {
+          required: "Campo obrigatório",
+          minlength: "Mínimo 8 caracteres"
+        }
+      },
+      errorPlacement: function(error, element) {
+        offset = element.offset();
+        error.insertAfter(element.parent());
+        error.addClass("validationError");
+      }
+    });
+  });
+</script>
+
 <%= form_for Transfer.new, html: {autocomplete: "off", :role => 'form'}, url: transfer_path, method: :post do |t| %>
 
   <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
@@ -11,7 +61,7 @@
 
   <div class="field">
     <label>Conta destino</label>
-    <p><%= t.collection_select(:destiny_account, Account.where(:users_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
+    <p><input name="transfer[destiny_account]" type="text" /></p>
   </div>
 
   <div class="field">

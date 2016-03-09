@@ -1,12 +1,12 @@
 <%# navigation styled for Bootstrap 3.0 %>
   <% if user_signed_in? %>
     <div class="topbar">
-      <span>Bem vindo <%= current_user.name %></span>
+      <span><%= link_to 'Editar perfil', edit_user_registration_path %></span>
       <span style="float:right; margin-right: 10px;"><%= link_to 'Sair', destroy_user_session_path, :method=>'delete' %></span>
-      <span style="float:right;"><%= link_to 'Editar perfil', edit_user_registration_path %></span>
     </div>
     <div class="sidebar">
       <ul class="nav navbar-nav">
+        <li><a href="#">Bem vindo <%= current_user.name %></a></li>
         <li><%= link_to 'Contas', accounts_path %></li>
         <li><%= link_to 'Saldos', balance_path %></li>
         <li><%= link_to 'Saques', withdraw_path %></li>

@@ -19,7 +19,7 @@
   top: 0;
   bottom: 0;
   left: 0;
-  padding-top: 55px;
+  /*padding-top: 55px;*/
   width: 116px;
   background: #333333;
   height: 120%;
@@ -107,6 +107,15 @@ button {
   margin-top: 12px;
 }
 
+button:hover {
+  color: #EEE;
+}
+
+h1 {
+  margin-top: 35px;
+  margin-bottom: 30px;
+}
+
 .validationError {
   color: red;
 }
@@ -115,6 +124,6 @@ button {
   color: green;
 }
 
-.saque {
+.debito {
   color: red;
 }

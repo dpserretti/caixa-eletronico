@@ -61,10 +61,13 @@ class TransfersController < ApplicationController
     @transfer = Transfer.new(transfer_params)
     valor = deposit_params[:value]
     valor = valor.to_f
-    @origin = Account.find(transfer_params[:origin_account])
-    @destiny = Account.find(transfer_params[:destiny_account])
-    @origin.balance -= valor
-    @destiny.balance += valor
+    origin = Account.find(transfer_params[:origin_account])
+    @destiny = Account.where(:number => transfer_params[:destiny_account])
+    destiny = @destiny[0]
+
+    if destiny.nil?
+      redirect_to transfer_path , :flash => { :error => "Conta de destino não existe." }
+    end
 
     agora = Time.now # retorna horário atual
     hoje = Date.today.wday # retorna inteiro da semana, 0 = Dom
@@ -84,21 +87,24 @@ class TransfersController < ApplicationController
       taxa += 10
     end
 
-    @origin.balance -= taxa
-    @transfer.new_balance = @origin.balance
-    # @transfer.new_balance_destiny = @destiny.balance
-    @transfer.origin_acc_number = @origin.number
-    @transfer.destiny_acc_number = @destiny.number
-    @transfer.action = "Transferência"
     @user = User.find_by_email(current_user.email)
 
     if @user.valid_password?(params[:password])
-      if @origin.balance < 0
+      if origin.balance < 0
         redirect_to transfer_path , :flash => { :error => "Saldo insuficiente." }
       else
+        origin.balance -= valor
+        destiny.balance += valor
+        origin.balance -= taxa
+        @transfer.new_balance = origin.balance
+        @transfer.origin_acc_number = origin.number
+        @transfer.destiny_acc_number = destiny.number
+        @transfer.destiny_account = destiny.id
+        # @transfer.tax = taxa
+        @transfer.action = "Transferência"
         if @transfer.save
-          if @origin.save
-            if @destiny.save
+          if origin.save
+            if destiny.save
               flash[:notice] = "Transferência realizada."
               redirect_to accounts_path
             end
@@ -129,7 +135,7 @@ class TransfersController < ApplicationController
     @tudo = transfs.sort_by(&:created_at)
     # adicionar campo taxa e colocar campo de deposito livre e conta destino
     # na transferência também
-    # binding.pry
+    binding.pry
   end
 
   def balance

@@ -11,31 +11,18 @@
 
     $("#form_extract").validate({
       rules: {
-        data_ini: {
-          required: true
-        },
-        data_fin: {
-          required: true
-        },
         "account_id[0]": {
           required: true
         }
       },
       messages: {
-        data_ini: {
-          required: "Campo obrigatório",
-          valid: "asd"
-        },
-        data_fin: {
-          required: "Campo obrigatório"
-        },
         "account_id[0]": {
           required: "Campo obrigatório"
         }
       },
       errorPlacement: function(error, element) {
         offset = element.offset();
-        error.insertAfter(element);
+        error.insertAfter(element.parent());
         error.addClass("validationError");
       }
     });

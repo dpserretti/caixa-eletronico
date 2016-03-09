@@ -5,7 +5,10 @@
     $("#new_transfer").validate({
       rules: {
         "transfer[destiny_account]": {
-          required: true
+          required: true,
+          digits: true,
+          minlength: 4,
+          maxlength: 6
         },
         "transfer[value]": {
           required: true,
@@ -14,7 +17,10 @@
       },
       messages: {
         "transfer[destiny_account]": {
-          required: "Campo obrigatório"
+          required: "Campo obrigatório",
+          digits: "Apenas números"
+          minlength: "Mínimo 4 números"
+          maxlength: "Máximo 6 números"
         },
         "transfer[value]": {
           required: "Campo obrigatório",
@@ -23,7 +29,7 @@
       },
       errorPlacement: function(error, element) {
         offset = element.offset();
-        error.insertAfter(element);
+        error.insertAfter(element.parent());
         error.addClass("validationError");
       }
     });
@@ -37,7 +43,7 @@
 
   <div class="field">
     <label>Conta</label>
-    <p><%= t.collection_select(:destiny_account, Account.where(:users_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
+    <p><input name="transfer[destiny_account]" type="text" /></p>
   </div>
 
   <div class="field">

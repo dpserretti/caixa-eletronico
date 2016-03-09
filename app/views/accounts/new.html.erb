@@ -7,7 +7,8 @@
         "account[number]": {
           required: true,
           digits: true,
-          minlength: 4
+          minlength: 4,
+          maxlength: 6
         },
         "account[balance]": {
           required: true,
@@ -18,7 +19,8 @@
         "account[number]": {
           required: "Campo obrigatório",
           digits: "Apenas números",
-          minlength: "Mínimo 4 números"
+          minlength: "Mínimo 4 números",
+          maxlength: "Máximo 6 números"
         },
         "account[balance]": {
           required: "Campo obrigatório",
@@ -27,7 +29,7 @@
       },
       errorPlacement: function(error, element) {
         offset = element.offset();
-        error.insertAfter(element);
+        error.insertAfter(element.parent());
         error.addClass("validationError");
       }
     });
