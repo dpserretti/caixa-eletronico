@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307165725) do
+ActiveRecord::Schema.define(version: 20160305085818) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "users_id"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20160307165725) do
     t.datetime "updated_at",         null: false
     t.integer  "user_id"
     t.string   "action"
-    t.float    "new_balance"
+    t.float    "tax"
     t.string   "origin_acc_number"
     t.string   "destiny_acc_number"
   end

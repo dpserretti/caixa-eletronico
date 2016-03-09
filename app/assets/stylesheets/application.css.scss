@@ -50,9 +50,22 @@
 }
 
 tr > th, tr > td {
-  text-align: center;
-  width: 110px;
-  padding: 5px;
+  text-align: center !important;
+  width: 110px !important;
+  width: 50px !important;
+  padding: 5px !important;
+}
+
+.botao {
+  margin-top: -2px !important;
+}
+
+.bem-vindo {
+  cursor: default;
+}
+
+.bem-vindo:hover {
+  color: #FFF !important;
 }
 
 span {
@@ -87,6 +100,11 @@ form {
   width: 50%;
   margin: auto;
   padding-top: 15px;
+}
+
+table {
+  width: 740px;
+  margin-left: auto;
 }
 
 .acao {

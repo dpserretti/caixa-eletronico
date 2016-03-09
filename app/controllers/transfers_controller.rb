@@ -6,19 +6,30 @@ class TransfersController < ApplicationController
   end
 
   def depositar
-    @deposit = Transfer.new(deposit_params)
+    deposit = Transfer.new(deposit_params)
     valor = deposit_params[:value]
-    @account = Account.find(deposit_params[:destiny_account])
-    valor = valor.to_f
-    @account.balance += valor
-    @deposit.new_balance = @account.balance
-    @deposit.destiny_acc_number = @account.number
-    @deposit.action = "Depósito"
+    @account = Account.where(:number => deposit_params[:destiny_account])
+    account = @account[0]
 
-    if @account.save
-      if @deposit.save
-        flash[:notice] = "Depósito realizado."
-        redirect_to accounts_path
+    if account.nil?
+      redirect_to deposit_path , :flash => { :error => "Depósito não realizado. Conta de destino não existe." }
+    else
+      if account.status == "Encerrada"
+        redirect_to deposit_path , :flash => { :error => "Depósito não realizado. Conta de destino foi encerrada." }
+      else
+        valor = valor.to_f
+        account.balance += valor
+        deposit.destiny_acc_number = account.number
+        deposit.destiny_account = account.id
+        deposit.action = "Depósito"
+        deposit.tax = 0
+
+        if account.save
+          if deposit.save
+            flash[:notice] = "Depósito realizado."
+            redirect_to accounts_path
+          end
+        end
       end
     end
   end
@@ -27,23 +38,22 @@ class TransfersController < ApplicationController
   end
 
   def sacar
-    @withdraw = Transfer.new(withdraw_params)
-    valor = deposit_params[:value]
-    @account = Account.find(withdraw_params[:origin_account])
-    valor = valor.to_f
-    @account.balance -= valor
-    @withdraw.new_balance = @account.balance
-    @withdraw.origin_acc_number = @account.number
-    @withdraw.action = "Saque"
+    withdraw = Transfer.new(withdraw_params)
+    valor = withdraw_params[:value]
+    account = Account.find(withdraw_params[:origin_account])
+    user = User.find_by_email(current_user.email)
 
-    @user = User.find_by_email(current_user.email)
-
-    if @user.valid_password?(params[:password])
-      if @account.balance < 0
-        redirect_to withdraw_path, :flash => { :error => "Saldo insuficiente." }
+    if user.valid_password?(params[:password])
+      if account.balance < 0
+        redirect_to withdraw_path, :flash => { :error => "Saque não realizado. Saldo insuficiente." }
       else
-        if @account.save
-          if @withdraw.save
+        valor = valor.to_f
+        account.balance -= valor
+        withdraw.origin_acc_number = account.number
+        withdraw.action = "Saque"
+        withdraw.tax = 0
+        if account.save
+          if withdraw.save
             flash[:notice] = "Saque realizado."
             redirect_to accounts_path
           end
@@ -58,61 +68,64 @@ class TransfersController < ApplicationController
   end
 
   def transferir
-    @transfer = Transfer.new(transfer_params)
-    valor = deposit_params[:value]
-    valor = valor.to_f
+    transfer = Transfer.new(transfer_params)
+    valor = transfer_params[:value]
     origin = Account.find(transfer_params[:origin_account])
     @destiny = Account.where(:number => transfer_params[:destiny_account])
     destiny = @destiny[0]
 
     if destiny.nil?
-      redirect_to transfer_path , :flash => { :error => "Conta de destino não existe." }
-    end
-
-    agora = Time.now # retorna horário atual
-    hoje = Date.today.wday # retorna inteiro da semana, 0 = Dom
-    taxa = 0
-
-    if agora.hour >= 9 && agora.hour <= 18
-      if hoje == 0 || hoje == 6
-        taxa = 7
-      else
-        taxa = 5
-      end
+      redirect_to transfer_path , :flash => { :error => "Tranferência não realizada. Conta de destino não existe." }
     else
-      taxa = 7
-    end
-
-    if valor > 1000
-      taxa += 10
-    end
-
-    @user = User.find_by_email(current_user.email)
-
-    if @user.valid_password?(params[:password])
-      if origin.balance < 0
-        redirect_to transfer_path , :flash => { :error => "Saldo insuficiente." }
+      if destiny.status == "Encerrada"
+        redirect_to transfer_path , :flash => { :error => "Tranferência não realizada. Conta de destino foi encerrada." }
       else
-        origin.balance -= valor
-        destiny.balance += valor
-        origin.balance -= taxa
-        @transfer.new_balance = origin.balance
-        @transfer.origin_acc_number = origin.number
-        @transfer.destiny_acc_number = destiny.number
-        @transfer.destiny_account = destiny.id
-        # @transfer.tax = taxa
-        @transfer.action = "Transferência"
-        if @transfer.save
-          if origin.save
-            if destiny.save
-              flash[:notice] = "Transferência realizada."
-              redirect_to accounts_path
+        agora = Time.now # retorna horário atual
+        hoje = Date.today.wday # retorna inteiro da semana, 0 = Dom
+        taxa = 0
+
+        if agora.hour >= 9 && agora.hour <= 18
+          if hoje == 0 || hoje == 6
+            taxa = 7
+          else
+            taxa = 5
+          end
+        else
+          taxa = 7
+        end
+
+        valor = valor.to_f
+        if valor > 1000
+          taxa += 10
+        end
+
+        user = User.find_by_email(current_user.email)
+
+        if user.valid_password?(params[:password])
+          if origin.balance < 0
+            redirect_to transfer_path , :flash => { :error => "Saldo insuficiente." }
+          else
+            origin.balance -= valor
+            destiny.balance += valor
+            origin.balance -= taxa
+            transfer.origin_acc_number = origin.number
+            transfer.destiny_acc_number = destiny.number
+            transfer.destiny_account = destiny.id
+            transfer.tax = taxa
+            transfer.action = "Transferência"
+            if transfer.save
+              if origin.save
+                if destiny.save
+                  flash[:notice] = "Transferência realizada."
+                  redirect_to accounts_path
+                end
+              end
             end
           end
+        else
+          redirect_to transfer_path , :flash => { :error => "Transferência não realizada. Senha incorreta." }
         end
       end
-    else
-      redirect_to transfer_path , :flash => { :error => "Transferência não realizada. Senha incorreta." }
     end
   end
 
@@ -135,7 +148,7 @@ class TransfersController < ApplicationController
     @tudo = transfs.sort_by(&:created_at)
     # adicionar campo taxa e colocar campo de deposito livre e conta destino
     # na transferência também
-    binding.pry
+    # binding.pry
   end
 
   def balance

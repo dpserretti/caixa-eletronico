@@ -1,3 +1,5 @@
+<h1>Dados</h1>
+
 <p>
   <strong>Numero:</strong>
   <%= @account.number %>
@@ -14,4 +16,5 @@
 </p>
 
 <%= link_to '<button>Editar</button>'.html_safe, edit_account_path(@account) %> <br>
+<%= link_to '<button>Nova conta</button>'.html_safe,   new_account_path  %> <br>
 <%= link_to '<button>Voltar</button>'.html_safe, accounts_path %>
