@@ -5,9 +5,11 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-config.assets.initialize_on_precompile = false
+
 module CaixaEletronico
   class Application < Rails::Application
+
+    config.serve_static_assets = true
 
     config.generators do |g|
       g.test_framework :rspec,
