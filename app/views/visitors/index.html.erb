@@ -1,17 +1,21 @@
 <!-- Page Content -->
 <div class="container">
-
     <div class="row">
         <div class="col-lg-12 text-center">
-            <h1>A Bootstrap Starter Template</h1>
-            <p class="lead">A Bootstrap HTML starter template from <a href="http://startbootstrap.com/">startbootstrap.com</a>.</p>
-            <ul class="list-unstyled">
-                <li>Bootstrap</li>
-                <li>jQuery</li>
-            </ul>
+            <% if user_signed_in? %>
+            <h1>Bem vindo ao caixa eletrônico <%= current_user.name %></h1>
+            <div class="div-ix">
+                <p>Utilize o menu para navegar.</p>
+            <% else %>
+            <h1>Bem vindo ao caixa eletrônico</h1>
+            <div class="div-ix">
+                <%= link_to '<button class="botao-ix1">Logar</button>'.html_safe, new_user_session_path %>
+                <%= link_to '<button class="botao-ix2">Cadastrar</button>'.html_safe,  new_user_registration_path %>
+            <% end %>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- /.row -->
+        <!-- /.row -->
 
-</div>
-<!-- /.container -->
+    </div>
+    <!-- /.container -->

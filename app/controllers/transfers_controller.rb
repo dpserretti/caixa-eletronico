@@ -41,13 +41,13 @@ class TransfersController < ApplicationController
     valor = withdraw_params[:value]
     account = Account.find(withdraw_params[:origin_account])
     user = User.find_by_email(current_user.email)
+    valor = valor.to_f
+    account.balance -= valor
 
     if user.valid_password?(params[:password])
       if account.balance < 0
         redirect_to withdraw_path, :flash => { :error => "Saque não realizado. Saldo insuficiente." }
       else
-        valor = valor.to_f
-        account.balance -= valor
         withdraw.origin_acc_number = account.number
         withdraw.action = "Saque"
         withdraw.tax = 0
@@ -99,14 +99,14 @@ class TransfersController < ApplicationController
         end
 
         user = User.find_by_email(current_user.email)
+        origin.balance -= valor
+        destiny.balance += valor
+        origin.balance -= taxa
 
         if user.valid_password?(params[:password])
           if origin.balance < 0
             redirect_to transfer_path , :flash => { :error => "Saldo insuficiente." }
           else
-            origin.balance -= valor
-            destiny.balance += valor
-            origin.balance -= taxa
             transfer.origin_acc_number = origin.number
             transfer.destiny_acc_number = destiny.number
             transfer.destiny_account = destiny.id
