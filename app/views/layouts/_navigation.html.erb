@@ -1,4 +1,18 @@
 <%# navigation styled for Bootstrap 3.0 %>
+
+<style type="text/css">
+  .logout {
+    float: right;
+    margin-right: 10px;
+    color: #FFF !important;
+  }
+  .logout:hover {
+    color: #000 !important;
+    background: #333333 !important;
+    text-decoration: none;
+  }
+</style>
+
   <% if user_signed_in? %>
     <div class="topbar">
       <%= link_to 'Sair', destroy_user_session_path, :method=>'delete', class: "logout" %>

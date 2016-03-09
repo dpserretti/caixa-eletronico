@@ -4,13 +4,13 @@
         <div class="col-lg-12 text-center">
             <% if user_signed_in? %>
             <h1>Bem vindo ao caixa eletrônico <%= current_user.name %></h1>
-            <div class="div-ix">
+            <div style="margin: auto; width: 300px !important;">
                 <p>Utilize o menu para navegar.</p>
             <% else %>
             <h1>Bem vindo ao caixa eletrônico</h1>
             <div class="div-ix">
-                <%= link_to '<button class="botao-ix1">Logar</button>'.html_safe, new_user_session_path %>
-                <%= link_to '<button class="botao-ix2">Cadastrar</button>'.html_safe,  new_user_registration_path %>
+                <%= link_to '<button style="float: left;" class="botao-ix1">Logar</button>'.html_safe, new_user_session_path %>
+                <%= link_to '<button style="float: right;"class="botao-ix2">Cadastrar</button>'.html_safe,  new_user_registration_path %>
             <% end %>
                 </div>
             </div>
