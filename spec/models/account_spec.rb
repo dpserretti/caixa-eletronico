@@ -4,7 +4,7 @@ RSpec.describe Account, type: :model do
   context "Contas" do
     it "Conta válida?" do
       conta = Account.new
-      conta.users_id = 1
+      conta.user_id = 1
       conta.number = "1234"
       conta.balance = 200
       conta.status = "Ativa"
@@ -13,7 +13,7 @@ RSpec.describe Account, type: :model do
     end
     it "Conta inválida sem id de usuario?" do
       conta = Account.new
-      conta.users_id = nil
+      conta.user_id = nil
       conta.balance = 200
       conta.number = "1234"
       conta.status = "Ativa"
@@ -22,7 +22,7 @@ RSpec.describe Account, type: :model do
     end
     it "Conta inválida sem saldo?" do
       conta = Account.new
-      conta.users_id = 1
+      conta.user_id = 1
       conta.balance = nil
       conta.number = "1234"
       conta.status = "Ativa"
@@ -31,7 +31,7 @@ RSpec.describe Account, type: :model do
     end
     it "Conta inválida sem número?" do
       conta = Account.new
-      conta.users_id = 1
+      conta.user_id = 1
       conta.balance = 200
       conta.number = nil
       conta.status = "Ativa"
@@ -40,7 +40,7 @@ RSpec.describe Account, type: :model do
     end
     it "Conta inválida sem status?" do
       conta = Account.new
-      conta.users_id = 1
+      conta.user_id = 1
       conta.balance = 200
       conta.number = "1234"
       conta.status = nil

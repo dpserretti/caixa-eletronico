@@ -5,7 +5,7 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @accounts = Account.where(:users_id => current_user.id)
+    @accounts = Account.where(:user_id => current_user.id)
   end
 
   # GET /accounts/1
@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1/edit
   def edit
-    if current_user.id != @account.users_id
+    if current_user.id != @account.user_id
       redirect_to accounts_path, :flash => { :error => "Esta conta não pertence a você." }
     else
       @account = Account.find(params[:id])
@@ -78,7 +78,7 @@ class AccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:users_id, :number, :balance, :status)
+      params.require(:account).permit(:user_id, :number, :balance, :status)
     end
 
 end

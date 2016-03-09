@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20160304064152) do
 
   create_table "accounts", force: :cascade do |t|
-    t.integer  "users_id"
+    t.integer  "user_id"
     t.string   "number"
     t.float    "balance"
     t.string   "status"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20160304064152) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "accounts", ["users_id"], name: "index_accounts_on_users_id"
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
 
   create_table "transfers", force: :cascade do |t|
     t.string   "origin_account"
