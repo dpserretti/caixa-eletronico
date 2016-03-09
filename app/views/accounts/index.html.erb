@@ -14,7 +14,7 @@
     <% @accounts.each do |account| %>
       <tr>
         <td><%= account.number %></td>
-        <td><%= account.balance %></td>
+        <td>R$ <%= account.balance %></td>
         <td><%= account.status %></td>
         <% if account.status == "Ativa" %>
           <td><%= link_to '<button class="botao">Editar</button>'.html_safe, edit_account_path(account) %></td>

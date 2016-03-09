@@ -16,22 +16,26 @@
   </thead>
 
   <tbody>
-    <% @tudo.each do |t| %>
+    <% @extratos.each do |t| %>
       <tr>
-        <td><%= t.created_at.to_date %></td>
+        <td><%= l t.created_at.to_date, :format => :date %></td>
         <td><%= t.action %></td>
         <% if t.action == "Depósito" %>
-          <td class="deposito">+<%= t.value %></td>
+          <td class="deposito">R$ +<%= t.value %></td>
         <% else %>
           <% if t.action == "Saque" %>
-            <td class="debito">-<%= t.value %></td>
+            <td class="debito">R$ -<%= t.value %></td>
           <% else %>
-            <td><%= t.value %></td>
+            <td class="transf">R$ <%= t.value %></td>
           <% end %>
         <% end %>
         <td><%= t.origin_acc_number %></td>
         <td><%= t.destiny_acc_number %></td>
-        <td class="debito">-<%= t.tax %></td>
+        <% if t.tax == 0 %>
+          <td>R$ <%= t.tax %></td>
+        <% else %>
+          <td class="debito">R$ -<%= t.tax %></td>
+        <% end %>
       </tr>
     <% end %>
 

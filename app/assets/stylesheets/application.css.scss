@@ -84,6 +84,10 @@ span > a:hover, span > a:focus {
   text-decoration: none;
 }
 
+a:hover {
+  color: #FFF !important;
+}
+
 li > a {
   color: #FFF !important;
 }
@@ -145,3 +149,8 @@ h1 {
 .debito {
   color: red;
 }
+
+.transf {
+  color: orange;
+}
+

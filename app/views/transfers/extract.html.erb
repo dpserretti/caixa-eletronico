@@ -45,6 +45,11 @@
 <%= form_tag extract_path, :id => 'form_extract', method: :post do %>
 
   <div class="field">
+    <label>Conta</label>
+    <p><%= collection_select(:account_id, 0, Account.where(:users_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
+  </div>
+
+  <div class="field">
     <label>Data inicial</label>
     <p><input type="text" class="date" name="data_ini" autocomplete="off"></p>
   </div>
@@ -52,11 +57,6 @@
   <div class="field">
     <label>Data final</label>
     <p><input type="text" class="date" name="data_fin" autocomplete="off"></p>
-  </div>
-
-  <div class="field">
-    <label>Conta</label>
-    <p><%= collection_select(:account_id, 0, Account.where(:users_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
   </div>
 
   <div class="field">

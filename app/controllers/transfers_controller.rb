@@ -1,5 +1,4 @@
 class TransfersController < ApplicationController
-  # before_action :set_account, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   def deposit
@@ -138,17 +137,11 @@ class TransfersController < ApplicationController
     data_ini = data_ini.beginning_of_day
     data_fin = data_fin.end_of_day
     conta = params[:account_id]
-    @conta = Account.find(conta["0"])
-    @saldo_ini = Account.where(:id => conta["0"], :updated_at => data_ini)
-    @saldo_fin = Account.where(:id => conta["0"], :updated_at => data_fin)
-    # pegar obj conta para mostrar saldo inicial e final do periodo
     transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"], :user_id => current_user.id)
     transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"], :user_id => current_user.id)
     transfs = transfers1 + transfers2
-    @tudo = transfs.sort_by(&:created_at)
-    # adicionar campo taxa e colocar campo de deposito livre e conta destino
-    # na transferência também
-    # binding.pry
+    @conta = Account.find(conta["0"])
+    @extratos = transfs.sort_by(&:created_at)
   end
 
   def balance

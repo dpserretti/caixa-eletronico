@@ -14,13 +14,6 @@ end
 
 RSpec.describe User, type: :model do
   context "Usuários" do
-    it "Usuário válido?" do
-      user = User.new
-      user.name = "teste"
-      user.email = "teste@teste.com"
-
-      expect(user.valid?).to be_truthy
-    end
     it "Usuário inválido sem nome?" do
       user = User.new
       user.name = nil
