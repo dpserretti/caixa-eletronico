@@ -12,7 +12,7 @@
         },
         "account[balance]": {
           required: true,
-          digits: true
+          pattern: /^(\d+|\d+,\d{1,2})$/
         }
       },
       messages: {
@@ -24,7 +24,7 @@
         },
         "account[balance]": {
           required: "Campo obrigatório",
-          digits: "Apenas números"
+          pattern: "Apenas números. Máximo 2 casas decimais."
         }
       },
       errorPlacement: function(error, element) {
