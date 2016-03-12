@@ -3,7 +3,6 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $('.tf-value').mask('999,99', {reverse: true});
 
     $("#new_transfer").validate({
       rules: {
@@ -51,7 +50,7 @@
 
   <div class="field">
     <label>Valor</label>
-    <p><%= t.text_field :value, :class => "tf-value" %></p>
+    <p><%= t.text_field :value %></p>
   </div>
 
   <div class="field">
