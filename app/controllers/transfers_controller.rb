@@ -18,6 +18,7 @@ class TransfersController < ApplicationController
       else
         valor = valor.gsub(',', '.').to_f
         account.balance += valor
+        deposit.value = valor
         deposit.destiny_acc_number = account.number
         deposit.destiny_account = account.id
         deposit.action = "Depósito"
@@ -41,13 +42,14 @@ class TransfersController < ApplicationController
     valor = withdraw_params[:value]
     account = Account.find(withdraw_params[:origin_account])
     user = User.find_by_email(current_user.email)
-    valor = valor.gsub(',', '.').to_f
-    account.balance -= valor
 
     if user.valid_password?(params[:password])
       if account.balance < 0
         redirect_to withdraw_path, :flash => { :error => "Saque não realizado. Saldo insuficiente." }
       else
+        valor = valor.gsub(',', '.').to_f
+        account.balance -= valor
+        withdraw.value = valor
         withdraw.origin_acc_number = account.number
         withdraw.action = "Saque"
         withdraw.tax = 0
@@ -110,9 +112,10 @@ class TransfersController < ApplicationController
           if origin.balance < 0
             redirect_to transfer_path , :flash => { :error => "Saldo insuficiente." }
           else
+            transfer.origin_account = origin.id
             transfer.origin_acc_number = origin.number
-            transfer.destiny_acc_number = destiny.number
             transfer.destiny_account = destiny.id
+            transfer.destiny_acc_number = destiny.number
             transfer.action = "Transferência"
             if transfer.save
               if origin.save

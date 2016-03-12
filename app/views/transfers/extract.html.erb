@@ -8,6 +8,10 @@
       language: "pt-BR"
     });
 
+    $(".datepicker-switch").click(function(){
+      event.preventDefault();
+    });
+
     $("#form_extract").validate({
       rules: {
         data_ini: {
