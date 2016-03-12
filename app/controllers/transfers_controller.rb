@@ -16,7 +16,7 @@ class TransfersController < ApplicationController
       if account.status == "Encerrada"
         redirect_to deposit_path , :flash => { :error => "Depósito não realizado. Conta de destino foi encerrada." }
       else
-        valor = valor.to_f
+        valor = valor.gsub(',', '.').to_f
         account.balance += valor
         deposit.destiny_acc_number = account.number
         deposit.destiny_account = account.id
@@ -41,7 +41,7 @@ class TransfersController < ApplicationController
     valor = withdraw_params[:value]
     account = Account.find(withdraw_params[:origin_account])
     user = User.find_by_email(current_user.email)
-    valor = valor.to_f
+    valor = valor.gsub(',', '.').to_f
     account.balance -= valor
 
     if user.valid_password?(params[:password])
@@ -69,6 +69,7 @@ class TransfersController < ApplicationController
   def transferir
     transfer = Transfer.new(transfer_params)
     valor = transfer_params[:value]
+    valor = valor.gsub(',', '.').to_f
     origin = Account.find(transfer_params[:origin_account])
     @destiny = Account.where(:number => transfer_params[:destiny_account])
     destiny = @destiny[0]
@@ -79,7 +80,7 @@ class TransfersController < ApplicationController
       if destiny.status == "Encerrada"
         redirect_to transfer_path , :flash => { :error => "Tranferência não realizada. Conta de destino foi encerrada." }
       else
-        agora = Time.now # retorna horário atual
+        agora = Time.now
         hoje = Date.today.wday # retorna inteiro da semana, 0 = Dom
         taxa = 0
 
@@ -102,6 +103,8 @@ class TransfersController < ApplicationController
         origin.balance -= valor
         destiny.balance += valor
         origin.balance -= taxa
+        transfer.value = valor
+        transfer.tax = taxa
 
         if user.valid_password?(params[:password])
           if origin.balance < 0
@@ -110,7 +113,6 @@ class TransfersController < ApplicationController
             transfer.origin_acc_number = origin.number
             transfer.destiny_acc_number = destiny.number
             transfer.destiny_account = destiny.id
-            transfer.tax = taxa
             transfer.action = "Transferência"
             if transfer.save
               if origin.save
@@ -136,6 +138,7 @@ class TransfersController < ApplicationController
     data_fin = DateTime.parse(params[:data_fin])
     data_ini = data_ini.beginning_of_day
     data_fin = data_fin.end_of_day
+    # binding.pry
     conta = params[:account_id]
     transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"], :user_id => current_user.id)
     transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"], :user_id => current_user.id)

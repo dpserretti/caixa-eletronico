@@ -1,7 +1,10 @@
 <h1>Realizar depósito</h1>
 
+
 <script type="text/javascript">
   $(document).ready(function() {
+    $('.tf-value').mask('999,99', {reverse: true});
+
     $("#new_transfer").validate({
       rules: {
         "transfer[destiny_account]": {
@@ -12,7 +15,7 @@
         },
         "transfer[value]": {
           required: true,
-          digits: true
+          pattern: /^(\d+|\d+,\d{1,2})$/
         }
       },
       messages: {
@@ -24,7 +27,7 @@
         },
         "transfer[value]": {
           required: "Campo obrigatório",
-          digits: "Apenas números"
+          pattern: "Apenas números. Máximo 2 casas decimais."
         }
       },
       errorPlacement: function(error, element) {
@@ -48,7 +51,7 @@
 
   <div class="field">
     <label>Valor</label>
-    <p><%= t.text_field :value %></p>
+    <p><%= t.text_field :value, :class => "tf-value" %></p>
   </div>
 
   <div class="field">
