@@ -34,6 +34,8 @@ class AccountsController < ApplicationController
   # POST /accounts.json
   def create
     @account = Account.new(account_params)
+    valor = account_params[:balance]
+    @account.balance = valor.gsub(',', '.').to_f
     respond_to do |format|
       if @account.save
         format.html { redirect_to @account, notice: 'Conta criada.' }
