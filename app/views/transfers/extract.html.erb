@@ -3,10 +3,9 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
-    $('.date').mask('99/99/9999');
-
-    jQuery.extend(jQuery.validator.messages, {
-      date: "Entre com uma data válida"
+    $(".datepicker").datepicker({
+      fomart: "dd/mm/yyyy",
+      language: "pt-BR"
     });
 
     $("#form_extract").validate({
@@ -51,12 +50,12 @@
 
   <div class="field">
     <label>Data inicial</label>
-    <p><input type="text" class="date" name="data_ini" autocomplete="off"></p>
+    <p><input type="text" class="datepicker" name="data_ini" autocomplete="off"></p>
   </div>
 
   <div class="field">
     <label>Data final</label>
-    <p><input type="text" class="date" name="data_fin" autocomplete="off"></p>
+    <p><input type="text" class="datepicker" name="data_fin" autocomplete="off"></p>
   </div>
 
   <div class="field">
