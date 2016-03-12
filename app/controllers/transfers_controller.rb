@@ -141,11 +141,11 @@ class TransfersController < ApplicationController
     data_fin = DateTime.parse(params[:data_fin])
     data_ini = data_ini.beginning_of_day
     data_fin = data_fin.end_of_day
-    # binding.pry
     conta = params[:account_id]
-    transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"], :user_id => current_user.id)
-    transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"], :user_id => current_user.id)
+    transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"])
+    transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"])
     transfs = transfers1 + transfers2
+    binding.pry
     @conta = Account.find(conta["0"])
     @extratos = transfs.sort_by(&:created_at)
   end
