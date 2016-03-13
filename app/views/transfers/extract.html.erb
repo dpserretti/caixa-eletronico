@@ -3,22 +3,39 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-    $(".datepicker").datepicker({
-      fomart: "dd/mm/yyyy",
-      language: "pt-BR"
-    });
+    // $(".date").mask("99/99/9999");
 
-    $(".datepicker-switch").click(function(){
-      event.preventDefault();
-    });
+    $.validator.addMethod(
+      "date",
+      function(value, element) {
+           var check = false;
+           var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+           if( re.test(value)){
+                var adata = value.split('/');
+                var gg = parseInt(adata[0],10);
+                var mm = parseInt(adata[1],10);
+                var aaaa = parseInt(adata[2],10);
+                var xdata = new Date(aaaa,mm-1,gg);
+                if ( ( xdata.getFullYear() == aaaa ) && ( xdata.getMonth () == mm - 1 ) && ( xdata.getDate() == gg ) )
+                     check = true;
+                else
+                     check = false;
+           } else
+                check = false;
+           return this.optional(element) || check;
+      },
+      "Insira uma data válida"
+ );
 
     $("#form_extract").validate({
       rules: {
         data_ini: {
-          required: true
+          required: true,
+          date: true
         },
         data_fin: {
-          required: true
+          required: true,
+          date: true
         },
         "account_id[0]": {
           required: true
@@ -27,10 +44,12 @@
       messages: {
         data_ini: {
           required: "Campo obrigatório",
-          valid: "asd"
+          date: "Data inválida"
         },
         data_fin: {
-          required: "Campo obrigatório"
+          required: "Campo obrigatório",
+          date: "Data inválida"
+          // greaterThan: "Deve ser maior que data inicial",
         },
         "account_id[0]": {
           required: "Campo obrigatório"
@@ -54,12 +73,12 @@
 
   <div class="field">
     <label>Data inicial</label>
-    <p><input type="text" class="datepicker" name="data_ini" autocomplete="off"></p>
+    <p><input type="text" class="date" name="data_ini" autocomplete="off"></p>
   </div>
 
   <div class="field">
     <label>Data final</label>
-    <p><input type="text" class="datepicker" name="data_fin" autocomplete="off"></p>
+    <p><input type="text" class="date" name="data_fin" autocomplete="off"></p>
   </div>
 
   <div class="field">

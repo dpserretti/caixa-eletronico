@@ -18,11 +18,3 @@
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require maskedinput
-//= require bootstrap-datepicker
-
-  $(document).ready(function() {
-    $(".datepicker").datepicker({
-      format: "dd/mm/yyyy",
-      language: "pt-BR"
-    });
-  });

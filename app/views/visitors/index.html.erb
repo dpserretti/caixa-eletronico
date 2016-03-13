@@ -9,8 +9,9 @@
             <% else %>
             <h1>Bem vindo ao caixa eletrônico</h1>
             <div style="margin: auto; width: 300px !important;">
-                <%= link_to '<button style="float: left;" class="botao-ix1">Logar</button>'.html_safe, new_user_session_path %>
-                <%= link_to '<button style="float: right;"class="botao-ix2">Cadastrar</button>'.html_safe,  new_user_registration_path %>
+                <%= link_to '<button style="float: left;">Depositar</button>'.html_safe,  deposit_path %>
+                <%= link_to '<button>Logar</button>'.html_safe, new_user_session_path %>
+                <%= link_to '<button style="float: right;">Cadastrar</button>'.html_safe,  new_user_registration_path %>
             <% end %>
                 </div>
             </div>

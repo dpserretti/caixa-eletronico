@@ -1,5 +1,5 @@
 class TransfersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:depositar, :deposit]
 
   def deposit
   end
@@ -23,11 +23,10 @@ class TransfersController < ApplicationController
         deposit.destiny_account = account.id
         deposit.action = "Depósito"
         deposit.tax = 0
-
         if account.save
           if deposit.save
             flash[:notice] = "Depósito realizado."
-            redirect_to accounts_path
+            redirect_to deposit_path
           end
         end
       end
@@ -145,7 +144,6 @@ class TransfersController < ApplicationController
     transfers1 = Transfer.where(:created_at => data_ini..data_fin, :origin_account => conta["0"])
     transfers2 = Transfer.where(:created_at => data_ini..data_fin, :destiny_account => conta["0"])
     transfs = transfers1 + transfers2
-    binding.pry
     @conta = Account.find(conta["0"])
     @extratos = transfs.sort_by(&:created_at)
   end

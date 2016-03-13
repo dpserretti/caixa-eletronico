@@ -10,7 +10,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'pry-rails'
 gem 'jquery-validation-rails'
 gem 'maskedinput-rails'
-gem 'bootstrap-datepicker-rails'
 group :development, :test do
   gem 'byebug'
 end

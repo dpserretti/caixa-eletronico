@@ -6,9 +6,8 @@ feature "Testando views tranferências" do
   scenario "Operação Depósito" do
     visit "/deposit"
     within "form" do
-      find("transfer_destiny").set("4321")
-      # fill_in "transfer_destiny", :with => "4321",
-      # fill_in "transfer[value]", :with => "25"
+      # find("input").set("4321")
+      fill_in "transfer[destiny_account]", :with => "25"
     end
     click_button "Depositar"
     page.should have_content "Depósito realizado."
