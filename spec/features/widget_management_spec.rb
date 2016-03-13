@@ -6,11 +6,12 @@ feature "Testando views tranferências" do
   scenario "Operação Depósito" do
     visit "/deposit"
     within "form" do
-      # find("input").set("4321")
-      fill_in "transfer[destiny_account]", :with => "25"
+      # find(".js-acc-id").set "1"
+      find(".js-acc-dtn").set "1111"
+      find(".js-dep-val").set "50"
     end
     click_button "Depositar"
-    page.should have_content "Depósito realizado."
+    expect(page).to have_content "Depósito realizado."
   end
 
   # scenario "Operação Saque" do
