@@ -16,6 +16,8 @@ class TransfersController < ApplicationController
       if account.status == "Encerrada"
         redirect_to deposit_path , :flash => { :error => "Depósito não realizado. Conta de destino foi encerrada." }
       else
+        valor = valor.gsub('R$ ', '')
+        valor = valor.gsub('.', '')
         valor = valor.gsub(',', '.').to_f
         account.balance += valor
         deposit.value = valor
@@ -42,10 +44,13 @@ class TransfersController < ApplicationController
     account = Account.find(withdraw_params[:origin_account])
     user = User.find_by_email(current_user.email)
 
+
     if user.valid_password?(params[:password])
       if account.balance < 0
         redirect_to withdraw_path, :flash => { :error => "Saque não realizado. Saldo insuficiente." }
       else
+        valor = valor.gsub('R$ ', '')
+        valor = valor.gsub('.', '')
         valor = valor.gsub(',', '.').to_f
         account.balance -= valor
         withdraw.value = valor
@@ -70,6 +75,8 @@ class TransfersController < ApplicationController
   def transferir
     transfer = Transfer.new(transfer_params)
     valor = transfer_params[:value]
+    valor = valor.gsub('R$ ', '')
+    valor = valor.gsub('.', '')
     valor = valor.gsub(',', '.').to_f
     origin = Account.find(transfer_params[:origin_account])
     @destiny = Account.where(:number => transfer_params[:destiny_account])
@@ -95,7 +102,6 @@ class TransfersController < ApplicationController
           taxa = 7
         end
 
-        valor = valor.to_f
         if valor > 1000
           taxa += 10
         end

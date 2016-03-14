@@ -3,36 +3,47 @@ require 'capybara/rspec'
 
 feature "Testando views tranferências" do
 
-  scenario "Operação Depósito" do
-    visit "/deposit"
-    within "form" do
-      # find(".js-acc-id").set "1"
-      find(".js-acc-dtn").set "1111"
-      find(".js-dep-val").set "50"
+  # scenario "Operação Depósito válida?" do
+  #   visit "/deposit"
+  #   within "form" do
+  #     find(".js-acc-dtn").set "1111"
+  #     find(".js-dep-val").set "50"
+  #   end
+  #   click_button "Depositar"
+  #   expect(page).to have_content "Depósito realizado."
+  # end
+
+  scenario "Operação Depósito inválida?" do
+    page.visit "/deposit"
+    page.within "form" do
+      page.find(".js-acc-dtn").set ""
+      page.find(".js-dep-val").set "50"
     end
-    click_button "Depositar"
-    expect(page).to have_content "Depósito realizado."
+    page.click_button "Depositar"
+    expect(page).to have_content "Conta de destino não existe."
   end
 
-  # scenario "Operação Saque" do
-  #   visit "/withdraw"
-  #   within "form" do
-  #     fill_in "transfer[origin_account]", :with => "1"
-  #     fill_in "transfer[value]", :with => "50"
-  #     fill_in "password", :with => "87654321"
-  #   end
-  #   click_button "Sacar"
-  #   page.should have_content "Saque realizado."
-  # end
+  scenario "Operação Saque inválida sem conta?" do
+    page.visit "/withdraw"
+    page.within "form" do
+      page.find(".js-acc-org").set "1111"
+      page.find(".js-wit-val").set "50"
+      page.find(".js-acc-pwd").set "87654321"
+    end
+    page.click_button "Sacar"
+    expect(page).to have_content "Saque não realizado."
+  end
 
-  # scenario "Operação Saldo" do
-  #   visit "/balance"
-  #   within "form" do
-  #     fill_in "account_id[0]", :with => "1"
-  #   end
-  #   click_button "Solicitar"
-  #   page.should have_content "Saldo"
-  # end
+  scenario "Operação Extrato válida?" do
+    page.visit "/extract"
+    page.within "form" do
+      page.find(".js-acc-org").set "1111"
+      page.find(".js-ini").set "01/03/2016"
+      page.find(".js-fin").set "15/01/2016"
+    end
+    page.click_button "Solicitar"
+    page.should have_content "Conta"
+  end
 
   # scenario "Operação Tranferência" do
   #   visit "/transfer"
@@ -59,17 +70,19 @@ feature "Testando views tranferências" do
 
 # end
 
-# feature "Testando views contas" do
+feature "Testando views contas" do
 
-#   scenario "Operação Nova Conta" do
-#     visit "/accounts/new"
-#     within "form" do
-#       fill_in "account[number]", :with => "4321"
-#       fill_in "account[balance]", :with => "25"
-#       fill_in "account[status]", :with => "Ativa"
-#     end
-#     click_button "Criar"
-#     page.should have_content "Conta criada."
-#   end
+  scenario "Operação Nova Conta" do
+    page.visit "/accounts/new"
+    page.within "form" do
+      page.find(".js-acc-num").set "4321"
+      page.find(".js-acc-bal").set "25"
+      page.find(".js-acc-sts").set "Ativa"
+
+    end
+    click_button "Criar"
+    page.should have_content "Conta criada."
+  end
+end
 
 end

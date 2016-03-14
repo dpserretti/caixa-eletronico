@@ -2,14 +2,16 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+
+    $(".js-wit-val").maskMoney({prefix:"R$ ", allowNegative: false, thousands: ".", decimal: ",", affixesStay: false});
+
     $("#new_transfer").validate({
       rules: {
         "transfer[origin_account]": {
           required: true
         },
         "transfer[value]": {
-          required: true,
-          pattern: /^(\d+|\d+,\d{1,2})$/
+          required: true
         },
         password: {
           required: true,
@@ -21,8 +23,7 @@
           required: "Campo obrigatório"
         },
         "transfer[value]": {
-          required: "Campo obrigatório",
-          pattern: "Apenas números. Máximo 2 casas decimais."
+          required: "Campo obrigatório"
         },
         password: {
           required: "Campo obrigatório",
@@ -49,12 +50,12 @@
 
   <div class="field">
     <label>Valor</label>
-    <p><%= t.text_field :value %></p>
+    <p><%= t.text_field :value, :class => "js-wit-val" %></p>
   </div>
 
   <div class="field">
     <label>Digite sua senha:</label>
-    <p><%= password_field_tag :password %></p>
+    <p><%= password_field_tag :password, :class => "js-acc-pwd" %></p>
   </div>
 
   <div class="field">

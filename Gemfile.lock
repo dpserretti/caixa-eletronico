@@ -116,6 +116,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     maskedinput-rails (1.4.0.0)
+    maskmoney-rails (3.0.2.0)
     method_source (0.8.2)
     mime-types (2.99.1)
     mini_portile2 (2.0.0)
@@ -264,6 +265,7 @@ DEPENDENCIES
   jquery-validation-rails
   launchy
   maskedinput-rails
+  maskmoney-rails
   pg
   pry-rails
   quiet_assets

@@ -4,6 +4,8 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
+    $(".js-dep-val").maskMoney({prefix:"R$ ", allowNegative: false, thousands: ".", decimal: ",", affixesStay: false});
+
     $("#new_transfer").validate({
       rules: {
         "transfer[destiny_account]": {
@@ -13,8 +15,7 @@
           maxlength: 6
         },
         "transfer[value]": {
-          required: true,
-          pattern: /^(\d+|\d+,\d{1,2})$/
+          required: true
         }
       },
       messages: {
@@ -25,8 +26,7 @@
           maxlength: "Máximo 6 números"
         },
         "transfer[value]": {
-          required: "Campo obrigatório",
-          pattern: "Apenas números. Máximo 2 casas decimais."
+          required: "Campo obrigatório"
         }
       },
       errorPlacement: function(error, element) {
@@ -44,7 +44,7 @@
   <% if user_signed_in? %>
     <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
   <% else %>
-    <input class="js-acc-id" name="transfer[user_id]" id="transfer_user_id" type="hidden" value="999999">
+    <input class="js-acc-id" name="transfer[user_id]" id="transfer_user_id" type="hidden" value="9999999">
   <% end %>
 
   <div class="field">
