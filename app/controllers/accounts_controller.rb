@@ -35,7 +35,10 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     valor = account_params[:balance]
-    @account.balance = valor.gsub(',', '.').to_f
+    valor = valor.gsub('R$ ', '')
+    valor = valor.gsub('.', '')
+    valor = valor.gsub(',', '.').to_f
+    @account.balance = valor
     respond_to do |format|
       if @account.save
         format.html { redirect_to @account, notice: 'Conta criada.' }

@@ -7,7 +7,7 @@
 
 <p>
   <strong>Saldo:</strong>
-  R$ <%= @conta.balance %>
+  R$ <%= number_with_precision(@conta.balance, :precision => 2, :delimiter => '.', :separator => ',') %>
 </p>
 
 <p>

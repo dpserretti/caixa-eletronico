@@ -39,13 +39,13 @@
           <td><%= t.origin_acc_number %></td>
           <td><%= t.destiny_acc_number %></td>
           <% if @conta.number == t.destiny_acc_number %>
-            <td>R$ -0,00</td>
+            <td>R$ 0,00</td>
           <% else %>
             <% if @conta.number == t.origin_acc_number %>
               <% if t.tax == 0 %>
-                <td>R$ <%= t.tax %></td>
+                <td>R$ <%= number_with_precision(t.tax, :precision => 2, :delimiter => '.', :separator => ',') %></td>
               <% else %>
-                <td class="debito">R$ -<%= t.tax %></td>
+                <td class="debito">R$ -<%= number_with_precision(t.tax, :precision => 2, :delimiter => '.', :separator => ',') %></td>
               <% end %>
             <% end %>
           <% end %>

@@ -2,6 +2,9 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+
+    $(".js-acc-bal").maskMoney({prefix:"R$ ", allowNegative: false, thousands: ".", decimal: ",", affixesStay: false});
+
     $("#new_account").validate({
       rules: {
         "account[number]": {
@@ -11,8 +14,7 @@
           maxlength: 6
         },
         "account[balance]": {
-          required: true,
-          pattern: /^(\d+|\d+,\d{1,2})$/
+          required: true
         }
       },
       messages: {
@@ -23,8 +25,7 @@
           maxlength: "Máximo 6 números"
         },
         "account[balance]": {
-          required: "Campo obrigatório",
-          pattern: "Apenas números. Máximo 2 casas decimais."
+          required: "Campo obrigatório"
         }
       },
       errorPlacement: function(error, element) {
@@ -57,7 +58,7 @@
   </div>
   <div class="field">
     <label>Saldo inicial</label>
-    <p><%= f.text_field :balance, autocomplete: "off" %></p>
+    <p><%= f.text_field :balance, autocomplete: "off", class: "js-acc-bal" %></p>
   </div>
   <!-- isso vai ser feito na hora de salvar no controller -->
   <input name="account[status]" id="account_status" type="hidden" value="Ativa">
