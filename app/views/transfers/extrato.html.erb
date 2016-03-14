@@ -25,7 +25,7 @@
     <% else %>
       <% @extratos.each do |t| %>
         <tr>
-          <td><%= t.created_at.to_datetime %></td>
+          <td><%= l t.created_at.to_date, :format => :date %></td>
           <td><%= t.action %></td>
           <% if t.action == "Depósito" %>
             <td class="deposito">R$ +<%= number_with_precision(t.value, :precision => 2, :delimiter => '.', :separator => ',') %></td>
