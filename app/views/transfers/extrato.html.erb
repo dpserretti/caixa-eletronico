@@ -38,10 +38,16 @@
           <% end %>
           <td><%= t.origin_acc_number %></td>
           <td><%= t.destiny_acc_number %></td>
-          <% if t.tax == 0 %>
-            <td>R$ <%= t.tax %></td>
+          <% if @conta.number == t.destiny_acc_number %>
+            <td>R$ -0,00</td>
           <% else %>
-            <td class="debito">R$ -<%= t.tax %></td>
+            <% if @conta.number == t.origin_acc_number %>
+              <% if t.tax == 0 %>
+                <td>R$ <%= t.tax %></td>
+              <% else %>
+                <td class="debito">R$ -<%= t.tax %></td>
+              <% end %>
+            <% end %>
           <% end %>
         </tr>
       <% end %>
