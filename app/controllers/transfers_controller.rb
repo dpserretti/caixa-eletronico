@@ -142,8 +142,8 @@ class TransfersController < ApplicationController
   end
 
   def extrato
-    data_ini = DateTime.parse(params[:data_ini])
-    data_fin = DateTime.parse(params[:data_fin])
+    data_ini = DateTime.parse(params[:data_ini]).change(:offset => "-0300")
+    data_fin = DateTime.parse(params[:data_fin]).change(:offset => "-0300")
     data_ini = data_ini.beginning_of_day
     data_fin = data_fin.end_of_day
     conta = params[:account_id]
