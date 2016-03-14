@@ -44,7 +44,7 @@
   <% if user_signed_in? %>
     <input name="transfer[user_id]" id="transfer_user_id" type="hidden" value="<%= current_user.id %>">
   <% else %>
-    <input class="js-acc-id" name="transfer[user_id]" id="transfer_user_id" type="hidden" value="9999999">
+    <input class="js-acc-id" name="transfer[user_id]" id="transfer_user_id" type="hidden" value="1">
   <% end %>
 
   <div class="field">
