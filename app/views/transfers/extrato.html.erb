@@ -33,7 +33,11 @@
             <% if t.action == "Saque" %>
               <td class="debito">R$ -<%= number_with_precision(t.value, :precision => 2, :delimiter => '.', :separator => ',') %></td>
             <% else %>
-              <td class="transf">R$ <%= number_with_precision(t.value, :precision => 2, :delimiter => '.', :separator => ',') %></td>
+              <% if @conta.number == t.origin_acc_number %>
+                <td class="debito">R$ -<%= number_with_precision(t.value, :precision => 2, :delimiter => '.', :separator => ',') %></td>
+              <% else %>
+                  <td class="deposito">R$ +<%= number_with_precision(t.value, :precision => 2, :delimiter => '.', :separator => ',') %></td>
+              <% end %>
             <% end %>
           <% end %>
           <td><%= t.origin_acc_number %></td>
