@@ -57,12 +57,12 @@
 
   <div class="field">
     <label>Conta origem</label>
-    <p><%= t.collection_select(:origin_account, Account.where(:user_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta") %></p>
+    <p><%= t.collection_select(:origin_account, Account.where(:user_id => current_user.id, :status => "Ativa"), :id, :number, prompt: "Selecione a conta", :class => "js-tf-org" ) %></p>
   </div>
 
   <div class="field">
     <label>Conta destino</label>
-    <p><input name="transfer[destiny_account]" type="text" /></p>
+    <p><input class="js-tf-dtn"  name="transfer[destiny_account]" type="text" /></p>
   </div>
 
   <div class="field">
@@ -72,7 +72,7 @@
 
   <div class="field">
     <label>Digite sua senha:</label>
-    <p><%= password_field_tag :password %></p>
+    <p><%= password_field_tag :password, :class => "js-tf-pwd" %></p>
   </div>
 
   <div class="field">

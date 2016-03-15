@@ -160,6 +160,9 @@ class TransfersController < ApplicationController
   def saldo
     conta = params[:account_id]
     @conta = Account.find(conta["0"])
+    if @conta.nil?
+      redirect_to balance_path, :flash => { :error => "Conta não existe." }
+    end
   end
 
   def deposit_params

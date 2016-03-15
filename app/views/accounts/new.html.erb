@@ -51,7 +51,7 @@
     </div>
   <% end %>
 
-  <input name="account[user_id]" id="account_user_id" type="hidden" value="<%= current_user.id %>">
+  <input class="js-usr-id" name="account[user_id]" id="account_user_id" type="hidden" value="<%= current_user.id %>">
   <div class="field">
     <label>Número</label>
     <p><%= f.text_field :number, autocomplete: "off" %></p>
